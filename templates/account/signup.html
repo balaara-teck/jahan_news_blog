@@ -1,0 +1,67 @@
+{% extends "html/base.html" %}
+
+{% load static %}
+{% block title %}Register{%endblock title%}
+
+{% block content %}
+<div class="container mt-3">
+    <h3 class="text-center mb-2">Sign Up Form</h3>
+            <div class=" p-2">
+                <div class="login-form"> 
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Username Field -->
+                    <div class="mb-1">
+                        <label for="id_username" class="form-label m-0">Username</label>
+                        <input type="text" class="form-control" id="id_username" name="username" value="{{ form.username.value|default_if_none:'' }}">
+                        {% if form.username.errors %}
+                            <div class="text-danger">{{ form.username.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="mb-1">
+                        <label for="id_email" class="form-label m-0">Email</label>
+                        <input type="email" class="form-control" id="id_email" name="email" value="{{ form.email.value|default_if_none:'' }}">
+                        {% if form.email.errors %}
+                            <div class="text-danger">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-1 position-relative">
+                        <label for="id_password1" class="form-label m-0">Password</label>
+                        <input type="password" class="form-control" id="id_password1" name="password1">
+                        <span toggle="#id_password1" class="toggle-password bi bi-eye-slash position-absolute top-50 end-0 me-3"></span>
+                        {% if form.password1.errors %}
+                            <div class="text-danger">{{ form.password1.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="mb-3 position-relative">
+                        <label for="id_password2" class="form-label m-0">Confirm Password</label>
+                        <input type="password" class="form-control" id="id_password2" name="password2">
+                        <span toggle="#id_password2" class="toggle-password bi bi-eye-slash position-absolute top-50 end-0 me-3"></span>
+                        {% if form.password2.errors %}
+                            <div class="text-danger">{{ form.password2.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100 mt-1">Sign Up</button>
+                </form>
+                <h5 class="text-center mt-2">Or Continue With</h5> 
+                <div class="social-login mt-2">
+                    <button class="btn btn-danger w-100 mb-2">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button class="btn btn-primary w-100">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                </div>
+                <small class="d-block text-center mt-2">Old To Jahan News Blog? <a href="{% url 'account_login' %}">Signin</a></small>
+            </div>
+        </div>
+    </div>
+{% endblock %}

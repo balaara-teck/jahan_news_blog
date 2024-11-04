@@ -1,0 +1,55 @@
+{% extends "html/base.html" %}
+{% block title %}Login{%endblock title%}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Login</h2>
+    <div class="social-login mt-4">
+        <button class="btn btn-danger w-100 mb-2">
+            <i class="fab fa-google"></i> Google
+        </button>
+        <button class="btn btn-primary w-100">
+            <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+    </div>
+
+    <h5 class="text-center mt-2">Or</h5>
+
+    <div class="login-form mt-2">
+        <form method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error">{{ form.non_field_errors.0 }}</div>
+            {% endif %}
+            <div class="mb-3">
+                <label for="id_login" class="form-label">Username or Email:</label>
+                <input type="text" name="login" id="id_login" class="form-control" value="{{ form.login.value|default_if_none:'' }}">
+                {% if form.login.errors %}
+                    <div class="error">{{ form.login.errors.0 }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-3 position-relative">
+                <label for="id_password" class="form-label d-flex justify-content-between"><span>Password:</span><a href="{% url 'account_reset_password' %}"><small>Forgot Password?</small></a></label>
+                <input type="password" name="password" id="id_password" class="form-control">
+                <button type="button" class="toggle-password" onclick="togglePassword()">
+                    <i class="fas fa-eye" id="password-icon"></i>
+                </button>
+                {% if form.password.errors %}
+                    <div class="error">{{ form.password.errors.0 }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-3 form-check">
+                <input type="checkbox" name="remember_me" id="id_remember_me" class="form-check-input" {% if form.remember_me.value %}checked{% endif %}>
+                <label for="id_remember_me" class="form-check-label">{{ form.remember_me.label }}</label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <small class="d-block text-center mt-2">New To Jahan News Blog? <a href="{% url 'account_signup' %}">Register</a></small>
+    </div>
+
+   
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+# Python files
+*.pyc
+__pycache__/
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Environment variables
+.env
+
+# macOS specific
+.DS_Store
+
+# Virtual environments
+venv/
+env/
+v/
+# Static and media files
+/static/
+/media/
+images/
+
+# VSCode
+.vscode/
+
+# JetBrains IDEs
+.idea/
+
+# Migrations
+**/migrations/
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.cache/
+
+# MySQL
+*.sql
+
+# Node modules (for frontend packages, if any)
+node_modules/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class

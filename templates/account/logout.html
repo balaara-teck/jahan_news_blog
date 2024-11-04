@@ -1,0 +1,27 @@
+{% extends "html/base.html" %}
+{% block title %}Logout{%endblock title%}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="logout-container">
+            <div class="card-body text-center p-4">
+                <h3 class="card-title mb-3 text-danger">Confirm Logout</h3>
+                <p class="card-text text-muted">
+                    Are you sure you want to log out? You can always log back in anytime.
+                </p>
+
+                <!-- Form for confirming logout -->
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger mt-3 w-100">Yes, Log Me Out</button>
+                </form>
+
+                <!-- Divider and cancel link -->
+                <hr class="my-4">
+                <button  onclick="javascript:history.back()" class="btn btn-secondary w-100">No, Go Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
