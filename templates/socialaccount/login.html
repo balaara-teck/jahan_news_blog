@@ -1,0 +1,28 @@
+{% extends "html/base.html" %}
+{% load static %}
+{% load socialaccount %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+  <!-- Informational message about login -->
+  <h2 style="text-align: center; color: #2c3e50;">Please log in to continue</h2>
+  <p style="text-align: center; font-size: 16px; color: #7f8c8d;">
+    To access this page, we recommend logging in using your Google account. 
+    Click the button below to proceed.
+  </p>
+
+  <!-- Form for Google Login -->
+  <form method="POST" style="text-align: center;">
+    {% csrf_token %}
+    <button type="submit" style="padding: 10px 20px; font-size: 18px; background-color: #4285F4; color: white; border: none; border-radius: 5px; cursor: pointer;">
+      Login with Google
+    </button>
+  </form>
+
+  <p style="text-align: center; font-size: 14px; color: #7f8c8d;">
+    If you already have a Google account, click the button above to continue.
+  </p>
+  <p style="text-align: center; font-size: 14px; color: #7f8c8d;">
+    If you prefer, you can choose other methods of authentication on the next page.
+  </p>
+{% endblock content %}

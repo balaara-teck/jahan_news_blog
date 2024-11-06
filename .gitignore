@@ -24,7 +24,7 @@ v/
 # Static and media files
 
 /media/
-
+images/
 
 # VSCode
 .vscode/
