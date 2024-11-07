@@ -9,12 +9,10 @@
 
     <form method="POST" enctype="multipart/form-data" class="news-editor-form shadow p-4 rounded bg-white" id="news-editor-form">
         {% csrf_token %}
-        
         <div class="mb-4">
             <label for="title" class="form-label fw-bold">Title</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Enter article title" required>
         </div>
-  
         <div class="mb-4">
             <label for="category" class="form-label fw-bold">Category</label>
             <select class="form-select" id="category" name="category" required>
@@ -58,7 +56,28 @@
         </div>
         <button type="submit" class="btn btn-primary w-100">Submit Article</button>
     </form>
-    
-</div>
+    <script>
+        document.getElementById('news-editor-form').addEventListener('submit', function() {
+            document.getElementById('body').value = document.getElementById('editor').innerText;
+        });
 
+        function previewImage(event) {
+        const previewContainer = document.getElementById("image-preview-container");
+        const previewImage = document.getElementById("image-preview");
+        
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewContainer.style.display = "none";
+        }
+    }
+
+    </script>
+</div>
 {% endblock %}

@@ -39,18 +39,23 @@
 </div>
 </form>
 <script>
-    // Function to preview the uploaded image
     function previewImage(event) {
-        const output = document.getElementById('profileImage');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function() {
-            URL.revokeObjectURL(output.src); // Free up memory
+        const previewContainer = document.getElementById("image-preview-container");
+        const previewImage = document.getElementById("image-preview");
+        
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewContainer.style.display = "none";
         }
     }
 </script>
 {% endblock %}
 
-{% block extra_css %}
 
-</style>
-{% endblock %}

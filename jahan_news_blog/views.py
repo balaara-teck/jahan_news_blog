@@ -6,6 +6,9 @@ from .forms import UserLoginForm,UserSignupForm,UserProfileForm,NewsArticleForm,
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserProfileModel,NewsArticleModel,NewsCommentsModel
 from django.db.models import Q
+import requests
+from django.core.files.base import ContentFile
+
 
 
 
@@ -43,41 +46,61 @@ def get_profile(user):
         profile = None
     return profile
 
+
+
 class UserProfileUpdateView(LoginRequiredMixin, View):
     template_name = "html/profile.html"
 
+    def get_profile(self, user):
+        return UserProfileModel.objects.get_or_create(user=user)[0]
+
+    def download_social_image(self, url):
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                return ContentFile(response.content)
+        except requests.RequestException as e:
+            print(f"Error downloading social image: {e}")
+        return None
+
     def get(self, request):
         user = request.user
-        profile, _ = UserProfileModel.objects.get_or_create(user=user)
-        return render(request, self.template_name,{"profile":get_profile(request.user)})
+        profile = self.get_profile(user)
+        return render(request, self.template_name, {"profile": profile})
 
     def post(self, request):
         user = request.user
-        profile, _ = UserProfileModel.objects.get_or_create(user=user)
+        profile = self.get_profile(user)
         form = UserProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
-            if request.FILES.get('image'):
+            if 'image' in request.FILES:
                 if profile.image:
-                    profile.image.delete(save=False) 
-
+                    profile.image.delete(save=False)
                 profile.image = form.cleaned_data['image']
-            else:
-                if user.socialaccount_set.exists():
-                    social_account = user.socialaccount_set.first()
-                    profile.image = social_account.extra_data.get('picture')  
+            elif user.socialaccount_set.exists():
+                social_account = user.socialaccount_set.first()
+                social_image_url = social_account.extra_data.get('picture')
+                
+                # Download and save the social account picture
+                if social_image_url:
+                    image_content = self.download_social_image(social_image_url)
+                    if image_content:
+                        if profile.image:
+                            profile.image.delete(save=False)
+                        profile.image.save(f"{user.username}_social_image.jpg", image_content)
 
-            user.first_name = request.POST.get('first_name', user.first_name)
-            user.last_name = request.POST.get('last_name', user.last_name)  
-            user.email = request.POST.get('email', user.email)
+            # Update user details
+            user.first_name = form.cleaned_data.get('first_name', user.first_name)
+            user.last_name = form.cleaned_data.get('last_name', user.last_name)
+            user.email = form.cleaned_data.get('email', user.email)
             user.save()
 
-            # Save the profile
             profile.save()
 
-            return redirect(reverse_lazy("home"))  
+            return redirect(reverse_lazy("home"))
 
-        return render(request, self.template_name,{"profile":get_profile(request.user)})
+        return render(request, self.template_name, {"profile": profile})
 
 
 class UserLoginView(LoginView):

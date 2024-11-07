@@ -32,8 +32,8 @@
                     <!-- Password Field -->
                     <div class="mb-1 position-relative">
                         <label for="id_password1" class="form-label m-0">Password</label>
-                        <input type="password" class="form-control" id="id_password1" name="password1">
-                        <span toggle="#id_password1" class="toggle-password bi bi-eye-slash position-absolute top-50 end-0 me-3"></span>
+                        <input type="password" class="form-control" id="id_password" name="password1">
+                        
                         {% if form.password1.errors %}
                             <div class="text-danger">{{ form.password1.errors.0 }}</div>
                         {% endif %}
@@ -43,7 +43,6 @@
                     <div class="mb-3 position-relative">
                         <label for="id_password2" class="form-label m-0">Confirm Password</label>
                         <input type="password" class="form-control" id="id_password2" name="password2">
-                        <span toggle="#id_password2" class="toggle-password bi bi-eye-slash position-absolute top-50 end-0 me-3"></span>
                         {% if form.password2.errors %}
                             <div class="text-danger">{{ form.password2.errors.0 }}</div>
                         {% endif %}
