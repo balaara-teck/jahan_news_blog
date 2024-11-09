@@ -91,9 +91,9 @@ class UserProfileUpdateView(LoginRequiredMixin, View):
                         profile.image.save(f"{user.username}_social_image.jpg", image_content)
 
             # Update user details
-            user.first_name = form.cleaned_data.get('first_name', user.first_name)
-            user.last_name = form.cleaned_data.get('last_name', user.last_name)
-            user.email = form.cleaned_data.get('email', user.email)
+            user.first_name = request.POST.get('first_name', user.first_name)
+            user.last_name = request.POST.get('last_name', user.last_name)
+            user.email = request.POST.get('email', user.email)
             user.save()
 
             profile.save()
