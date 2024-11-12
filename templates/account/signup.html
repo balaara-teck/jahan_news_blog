@@ -1,5 +1,5 @@
 {% extends "html/base.html" %}
-
+{% load socialaccount %}
 {% load static %}
 {% block title %}Register{%endblock title%}
 
@@ -52,9 +52,9 @@
                 </form>
                 <h5 class="text-center mt-2">Or Continue With</h5> 
                 <div class="social-login mt-2">
-                    <button class="btn btn-danger w-100 mb-2">
+                    <a href="{%  provider_login_url 'google' %}" type="button" class="btn btn-danger w-100 mb-2">
                         <i class="fab fa-google"></i> Google
-                    </button>
+                    </a>
                     <button class="btn btn-primary w-100">
                         <i class="fab fa-facebook-f"></i> Facebook
                     </button>

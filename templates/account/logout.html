@@ -10,6 +10,8 @@
                 <p class="card-text text-muted">
                     Are you sure you want to log out? You can always log back in anytime.
                 </p>
+                <hr class="my-4">
+                <button  onclick="javascript:history.back()" class="btn btn-secondary w-100">No, Go Back</button>
 
                 <!-- Form for confirming logout -->
                 <form method="post" action="{% url 'account_logout' %}">
@@ -18,8 +20,7 @@
                 </form>
 
                 <!-- Divider and cancel link -->
-                <hr class="my-4">
-                <button  onclick="javascript:history.back()" class="btn btn-secondary w-100">No, Go Back</button>
+                
             </div>
         </div>
     </div>

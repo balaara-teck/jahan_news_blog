@@ -10,8 +10,6 @@ import requests
 from django.core.files.base import ContentFile
 
 
-
-
 class Search(View):
     template_name = "html/index.html"
 
@@ -45,8 +43,6 @@ def get_profile(user):
     except:
         profile = None
     return profile
-
-
 
 class UserProfileUpdateView(LoginRequiredMixin, View):
     template_name = "html/profile.html"
@@ -102,13 +98,11 @@ class UserProfileUpdateView(LoginRequiredMixin, View):
 
         return render(request, self.template_name, {"profile": profile})
 
-
 class UserLoginView(LoginView):
     form_class = UserLoginForm 
 
 class UserSignupView(SignupView):
     form_class = UserSignupForm 
-
 
 class HomeView(View):
     template_name = "html/index.html"
@@ -118,7 +112,6 @@ class HomeView(View):
         profile=get_profile(request.user)
         context = {"news":news,"profile":profile}
         return render(request,self.template_name,context)
-    
 
 class NewsArticleView(LoginRequiredMixin,View):
     template_name = "html/writenews.html"
