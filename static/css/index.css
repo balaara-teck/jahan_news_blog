@@ -258,7 +258,19 @@ main {
     padding: 20px;
 }
 /* end for password_reset */
+/* socialaccount/login.html */
 
+
+.consent-box {
+    border-radius: 8px;
+    padding: 50px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+}
+/* end for socialaccount/login.html */
 /* account/login.html styling */
 .error {
     color: red;
