@@ -4,6 +4,48 @@
 {% block title %}Read News{%endblock title%}
 
 {% block content %}
+<style>
+    .floating-share-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        cursor: pointer;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+    }
+    .floating-share-btn:hover {
+        transform: scale(1.1);
+    }
+    .share-options-float {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 10px;
+        display: none;
+        z-index: 1000;
+    }
+    .share-options-float.show {
+        display: block;
+    }
+    .share-options-float button {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+    }
+</style>
 <div class="container my-5">
     <div class="row detail">
         <!-- Article Column -->
@@ -16,7 +58,7 @@
             <!-- Article Body -->
             <div class="article-body">
                 <p class="related_media_container">
-                 <img class="related_media {%if news.related_media %}{% else %} d-none {%endif%}" src="{%if news.related_media %}{{news.related_media.url}}{%endif%}" alt="">
+                    <img class="related_media {%if news.related_media %}{% else %} d-none {%endif%}" src="{%if news.related_media %}{{news.related_media.url}}{%endif%}" alt="">
                 </p>
                 <p>
                     {{news.body|safe|linebreaks}}
@@ -71,4 +113,41 @@
     </div>
 </div>
 
-{% endblock %}
+<!-- Floating Share Button -->
+<button class="floating-share-btn" onclick="toggleShareOptions()">
+    <i class="bi bi-share-fill"></i>
+</button>
+
+<!-- Floating Share Options Popup -->
+<div class="share-options-float" id="shareOptionsFloat">
+    <button onclick="shareOnFacebook()" class="btn btn-primary btn-sm w-100 mb-2">
+        <i class="bi bi-facebook"></i> Facebook
+    </button>
+    <button onclick="shareOnTwitter()" class="btn btn-info text-white btn-sm w-100 mb-2">
+        <i class="bi bi-twitter-x"></i> Twitter
+    </button>
+    <button onclick="shareOnWhatsApp()" class="btn btn-success btn-sm w-100 mb-2">
+        <i class="bi bi-whatsapp"></i> WhatsApp
+    </button>
+    <button onclick="copyLink()" class="btn btn-secondary btn-sm w-100" id="copyLinkBtnFloat">
+        <i class="bi bi-link-45deg"></i> Copy Link
+    </button>
+</div>
+
+<script>
+    function toggleShareOptions() {
+        const shareOptions = document.getElementById('shareOptionsFloat');
+        shareOptions.classList.toggle('show');
+    }
+
+    // Close share options when clicking outside
+    document.addEventListener('click', function(event) {
+        const shareOptions = document.getElementById('shareOptionsFloat');
+        const floatingShareBtn = document.querySelector('.floating-share-btn');
+        
+        if (!shareOptions.contains(event.target) && !floatingShareBtn.contains(event.target)) {
+            shareOptions.classList.remove('show');
+        }
+    });
+</script>
+{% endblock content %}
