@@ -3,14 +3,17 @@
 {% load socialaccount %}
 
 {% block content %}
+
+
 <div class="container">
     <h2 class="text-center mt-4">Login</h2>
+    
     <div class="social-login mt-4">
         <a href="{% provider_login_url 'google' %}" type="button" class="btn btn-danger w-100 mb-2">
-            <i class="fab fa-google"></i> Google
+            <i class="fab fa-google"></i> Sign In With Google
         </a>
         <button class="btn btn-primary w-100">
-            <i class="fab fa-facebook-f"></i> Facebook
+            <i class="fab fa-facebook-f"></i> Sign In With Facebook
         </button>
     </div>
 
