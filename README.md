@@ -14,6 +14,7 @@ A modern news blog built with Django, featuring user authentication, article man
 ```bash
 git clone <your-repository-url>
 cd jahan_news_blog
+mkdir media
 ```
 
 2. Create and activate a virtual environment
