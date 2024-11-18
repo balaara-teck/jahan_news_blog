@@ -9,6 +9,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.db
+dsjkhf
 *.sqlite3
 
 # Environment variables
