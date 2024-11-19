@@ -16,7 +16,7 @@
       <nav class="navbar navbar-expand-lg bg-body-light">
         <div class="container-fluid">
           <a href="{% url 'home' %}" class="navbar-brand site-logo-container" >
-            <img class="site-logo" src="{% static 'images/image.png' %}" alt="Logo"><span>Jahan</span>
+            <img class="site-logo" src="{% static 'images/image.png' %}" alt="Logo"><span><span class="jahan-text">Jahan</span></span>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -40,6 +40,11 @@
                 {% else %}
                 <a href="{% url 'account_login' %}" class="nav-link" >Login</a>
                 {% endif %}
+              </li>
+              <li class="nav-item">
+                <button id="theme-toggle" class="nav-link btn" style="background: none; border: none;">
+                  <i class="fas fa-moon"></i>
+                </button>
               </li>
             </ul>
             <form method="POST" class="me-2 mb-2 mb-lg-0" action="{% url 'search' 'result' %}">
@@ -88,11 +93,6 @@
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'js/base.js' %}" defer></script>
   <script src="{% static 'js/share.js' %}" defer></script>
-
-  <script>
-    const currentYear = new Date().getFullYear();
-    document.querySelector('.year').textContent = currentYear;
-  </script>
 
 </body>
 </html>

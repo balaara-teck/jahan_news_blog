@@ -31,13 +31,15 @@
                     <p class="card-subtitle text-muted small d-flex align-items-center">
                         <i class="bi bi-calendar-date me-2"></i> {{news.date_written}}
                     </p>
-                    <p class="card-text flex-grow-1 text-secondary">
-                        {%if news.related_media %}
+                    {%if news.related_media %}
+                    <p class="card-text flex-grow-1 news-body">
                         <img class="news-media" src="{{news.related_media.url}}" alt="">
-                        {% else %}
-                        {{news.body|safe|linebreaks|truncatewords:20}}
-                        {% endif %}
                     </p>
+                    {% else %}
+                    <div class="card-text flex-grow-1 news-body"> 
+                        {{news.body|safe|linebreaks|truncatewords:20}}
+                    </div>   
+                    {% endif %}
                     <a href="{% url 'readnews' news.id %}" class="btn read-more btn-outline-primary mt-1 align-self-start rounded-pill px-3 py-2">Read More</a>
                 </div>
             </div>
