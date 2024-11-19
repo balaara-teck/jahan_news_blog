@@ -54,4 +54,7 @@
         {%endif%}
     </div>
 </div>
-{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/share.js' %}" type="text/javascript"></script>
+{% endblock extra_js %}
+{% endblock content %}
