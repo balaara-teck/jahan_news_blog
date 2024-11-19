@@ -40,6 +40,9 @@
     --toolbar-btn-border: #dee2e6;
     --toolbar-btn-hover: #e9ecef;
     --form-label: #333;
+    --card-border: #dee2e6;
+    --input-focus-shadow: rgba(0, 123, 255, 0.25);
+    --error-feedback: #dc3545;
 }
 
 [data-theme="dark"] {
@@ -83,6 +86,9 @@
     --toolbar-btn-border: #505050;
     --toolbar-btn-hover: #4d4d4d;
     --form-label: #e0e0e0;
+    --card-border: #404040;
+    --input-focus-shadow: rgba(77, 163, 255, 0.25);
+    --error-feedback: #ff6b6b;
 }
 
 /* general styling */
@@ -507,8 +513,80 @@ hr {
     border-radius: 10px;
     box-shadow: 2px 3px 12px var(--shadow-color);
     padding: 20px;
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+}
+
+.reset-password .card-title {
+    color: var(--text-primary);
+}
+
+.reset-password .card-body {
+    background-color: var(--card-bg);
+}
+
+.reset-password .form-label {
+    color: var(--text-primary);
+}
+
+.reset-password .form-control {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--input-border);
+}
+
+.reset-password .form-control:focus {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--hover-color);
+    box-shadow: 0 0 0 0.2rem var(--input-focus-shadow);
+}
+
+.reset-password .invalid-feedback {
+    color: var(--error-feedback);
+}
+
+.reset-password .btn-primary {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+    color: white;
+}
+
+.reset-password .btn-primary:hover {
+    background-color: var(--nav-link-hover-color);
+    border-color: var(--nav-link-hover-color);
+    color: white;
 }
 /* end for password_reset */
+
+/* Password Reset Success Styles */
+.reset-success-card {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+    box-shadow: 0 0.5rem 1rem var(--card-shadow);
+}
+
+.reset-success-card .card-title {
+    color: var(--text-primary);
+}
+
+.reset-success-card .card-text {
+    color: var(--text-secondary);
+}
+
+.reset-success-card .btn-primary {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.reset-success-card .btn-primary:hover {
+    background-color: var(--nav-link-hover-color);
+    border-color: var(--nav-link-hover-color);
+    transform: translateY(-2px);
+}
+
 /* socialaccount/login.html */
 
 
