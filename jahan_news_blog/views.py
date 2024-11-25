@@ -157,7 +157,7 @@ class ReadArticleView(LoginRequiredMixin,View):
 
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.commentor = get_userprofile
+            comment.commentor = get_userprofile if get_userprofile else create_userprofile
             comment.news = get_object_or_404(NewsArticleModel,id=pk)
             comment.save()
             return redirect(reverse("readnews",kwargs={"pk":pk}))
