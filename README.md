@@ -2,7 +2,7 @@
 
 A modern news blog built with Django, featuring user authentication, article management, and a responsive design.
 
-## Prerequisites
+# Prerequisites
 
 - Python 3.8 or higher
 - pip (Python package manager)
