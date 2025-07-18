@@ -8,10 +8,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfileModel  
         fields = ['image']  
-
-
  
-
 class UserSignupForm(SignupForm):
     password2 = forms.CharField(
         label="Confirm Password",
@@ -21,15 +18,10 @@ class UserSignupForm(SignupForm):
         user = super(UserSignupForm, self).save(request)
         return user
 
-
 class UserLoginForm(LoginForm):
     remember_me = forms.BooleanField(required=False, label='Remember Me')
-
-
     def login(self, *args, **kwargs):
-       
         result = super(UserLoginForm, self).login(*args, **kwargs)
-
         if self.cleaned_data.get('remember_me'):
             self.request.session.set_expiry(1209600)  
         else:

@@ -8,6 +8,7 @@ from .models import UserProfileModel,NewsArticleModel,NewsCommentsModel
 from django.db.models import Q
 import requests
 from django.core.files.base import ContentFile
+from django.contrib import messages
 
 
 class Search(View):
@@ -77,8 +78,6 @@ class UserProfileUpdateView(LoginRequiredMixin, View):
             elif user.socialaccount_set.exists():
                 social_account = user.socialaccount_set.first()
                 social_image_url = social_account.extra_data.get('picture')
-                
-                # Download and save the social account picture
                 if social_image_url:
                     image_content = self.download_social_image(social_image_url)
                     if image_content:
@@ -91,12 +90,14 @@ class UserProfileUpdateView(LoginRequiredMixin, View):
             user.last_name = request.POST.get('last_name', user.last_name)
             user.email = request.POST.get('email', user.email)
             user.save()
-
             profile.save()
 
+            messages.success(request, "Your profile has been updated successfully.")  # ✅ Success message
             return redirect(reverse_lazy("home"))
 
+        messages.error(request, "Failed to update profile. Please correct the errors.")  # ❌ Error message
         return render(request, self.template_name, {"profile": profile})
+
 
 class UserLoginView(LoginView):
     form_class = UserLoginForm 
@@ -113,12 +114,14 @@ class HomeView(View):
         context = {"news":news,"profile":profile}
         return render(request,self.template_name,context)
 
-class NewsArticleView(LoginRequiredMixin,View):
+
+class NewsArticleView(LoginRequiredMixin, View):
     template_name = "html/writenews.html"
     
     def get(self, request):
         profile = get_profile(request.user)  
-        return render(request, self.template_name, {"profile": profile})
+        form = NewsArticleForm()
+        return render(request, self.template_name, {"profile": profile, "form": form})
     
     def post(self, request):
         form = NewsArticleForm(request.POST, request.FILES)
@@ -128,38 +131,54 @@ class NewsArticleView(LoginRequiredMixin,View):
             news_article = form.save(commit=False)
             news_article.author = request.user  
             news_article.save()
-            return redirect(reverse_lazy("home"))  
+            messages.success(request, "News article posted successfully.")  # 2. Success message
+            return redirect(reverse_lazy("home"))
 
+        messages.error(request, "Failed to post article. Please correct the errors below.")  # 3. Error message
         return render(request, self.template_name, {"form": form, "profile": profile})
 
-class ReadArticleView(LoginRequiredMixin,View):
+
+class ReadArticleView(LoginRequiredMixin, View):
     template_name = "html/detail.html"
     
-    def get(self,request,**kwargs):
-        pk = self.kwargs.get("pk")
-        news = NewsArticleModel.objects.get(id=pk)
+    def get(self, request, **kwargs):
+        pk = kwargs.get("pk")
+        news = get_object_or_404(NewsArticleModel, id=pk)
         comments = NewsCommentsModel.objects.filter(news=news)
-        no_of_comments = NewsCommentsModel.objects.filter(news=news).count()
+        no_of_comments = comments.count()
+        profile = get_profile(request.user)
 
-        profile=get_profile(request.user)
-        context = {"news":news,"profile":profile,"comments":comments,"no_of_comments":no_of_comments}
-        return render(request,self.template_name,context)
+        context = {
+            "news": news,
+            "profile": profile,
+            "comments": comments,
+            "no_of_comments": no_of_comments,
+        }
+        return render(request, self.template_name, context)
 
-    def post(self,request,**kwargs):
-        pk = self.kwargs.get("pk")
-        get_userprofile,create_userprofile = UserProfileModel.objects.get_or_create(user=request.user)
+    def post(self, request, **kwargs):
+        pk = kwargs.get("pk")
+        news = get_object_or_404(NewsArticleModel, id=pk)
+        profile = get_profile(request.user)
         form = NewsCommentsForm(request.POST)
-        news = NewsArticleModel.objects.get(id=pk)
         comments = NewsCommentsModel.objects.filter(news=news)
-        no_of_comments = NewsCommentsModel.objects.filter(news=news).count()
-        profile=get_profile(request.user)
-        context = {"news":news,"profile":profile,"comments":comments,"no_of_comments":no_of_comments}
+        no_of_comments = comments.count()
+
+        context = {
+            "news": news,
+            "profile": profile,
+            "comments": comments,
+            "no_of_comments": no_of_comments,
+        }
 
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.commentor = get_userprofile if get_userprofile else create_userprofile
-            comment.news = get_object_or_404(NewsArticleModel,id=pk)
+            comment.commentor = profile
+            comment.news = news
             comment.save()
-            return redirect(reverse("readnews",kwargs={"pk":pk}))
-         
-        return render(request,self.template_name,context)
+
+            messages.success(request, "Your comment was posted successfully.")
+            return redirect(reverse("readnews", kwargs={"pk": pk}))
+        
+        messages.error(request, "There was a problem posting your comment. Please try again.")
+        return render(request, self.template_name, context)

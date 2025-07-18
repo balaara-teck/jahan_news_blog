@@ -20,8 +20,8 @@ class NewsArticleModel(models.Model):
     related_media = models.ImageField(upload_to='newsmedia/', blank=True, null=True)
     body = models.TextField()
     approved = models.BooleanField(default=False)
-    date_written = models.DateField(auto_now_add=True)
-
+    date_written = models.DateField(auto_now_add=True) 
+    
     def __str__(self):
         truncated_title = ' '.join(self.title.split()[:30])  
         return f"{truncated_title}, Author: {self.author.username if self.author else 'Unknown'}"

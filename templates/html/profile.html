@@ -1,61 +1,66 @@
 {% extends "html/base.html" %}
 {% load static %}
-{% block title %}User Profile{%endblock title%}
+{% block title %}User Profile{% endblock title %}
 
 {% block content %}
+<style>
+   
+</style>
+
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-<div class="container mt-5">
-    <div class="profile-container p-4 ">
-        <h2 class="text-center">Username: <small> {{ user.username }}</small></h2>
-        <p class="text-center">Member Since: {{ user.date_joined|date:"Y" }}</p>
-        <hr>
-        <div class="row align-items-center">
-            
-            <div id="image-preview-container" class="col-md-6 text-center mb-4 mb-md-0">
-                <input name="image" type="file" id="profileImageUpload" accept="image/*" style="display: none;" onchange="previewImage(event)">
-                <img id="image-preview" src="{%if profile.image %}{{profile.image.url}}{% else %}{% static 'images/image.png' %}{% endif %}" alt="Profile Image" id="profileImage" class="profile-image" onclick="document.getElementById('profileImageUpload').click();">
+    <div class="container mt-5">
+        <div class="profile-container p-4">
+            <h2 class="text-center">Username: <small>{{ user.username }}</small></h2>
+            <p class="text-center text-muted">Member Since: {{ user.date_joined|date:"Y" }}</p>
+            <hr>
+            <div class="row align-items-center">
                 
+                <!-- Image Preview -->
+                <div id="image-preview-container" class="col-md-6 text-center mb-4 mb-md-0">
+                    <input name="image" type="file" id="profileImageUpload" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                    <img id="image-preview" 
+                         src="{% if profile.image %}{{ profile.image.url }}{% else %}{% static 'images/image.png' %}{% endif %}" 
+                         alt="Profile Image" 
+                         class="profile-image"
+                         onclick="document.getElementById('profileImageUpload').click();">
+                </div>
+
+                <!-- Profile Info -->
+                <div class="col-md-6 profile-info">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input name="first_name" type="text" id="firstName" class="form-control" value="{{ request.user.first_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="secondName">Last Name</label>
+                        <input name="last_name" type="text" id="secondName" class="form-control" value="{{ request.user.last_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input name="email" type="email" id="email" class="form-control" value="{{ user.email }}">
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </div>
             </div>
-            
-            <!-- Profile Info Column -->
-            <div class="col-md-6 profile-info">
-                <div class="form-group">
-                    <label for="firstName" class="text-muted">First Name</label>
-                    <input name="first_name" type="text" id="firstName" class="form-control" value="{{ request.user.first_name }}">
-                </div>
-                <div class="form-group">
-                    <label  for="secondName" class="text-muted">Second Name</label>
-                    <input name="last_name" type="text" id="secondName" class="form-control" value="{{ request.user.last_name }}" >
-                </div>
-                <div class="form-group">
-                    <label for="email" class="text-muted">Email</label>
-                    <input name="email" type="email" id="email" class="form-control" value="{{user.email }}" >
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </div>
     </div>
-</div>
 </form>
+
 <script>
     function previewImage(event) {
-        const previewContainer = document.getElementById("image-preview-container");
         const previewImage = document.getElementById("image-preview");
-        
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 previewImage.src = e.target.result;
-                previewContainer.style.display = "block";
             };
             reader.readAsDataURL(file);
-        } else {
-            previewContainer.style.display = "none";
         }
     }
 </script>
 {% endblock %}
-
-

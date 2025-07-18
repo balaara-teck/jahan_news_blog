@@ -4,48 +4,6 @@
 {% block title %}Read News{%endblock title%}
 
 {% block content %}
-<style>
-    .floating-share-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        cursor: pointer;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s ease;
-    }
-    .floating-share-btn:hover {
-        transform: scale(1.1);
-    }
-    .share-options-float {
-        position: fixed;
-        bottom: 80px;
-        right: 20px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        padding: 10px;
-        display: none;
-        z-index: 1000;
-    }
-    .share-options-float.show {
-        display: block;
-    }
-    .share-options-float button {
-        display: block;
-        width: 100%;
-        margin: 5px 0;
-    }
-</style>
 <div class="container my-5">
     <div class="row detail">
         <!-- Article Column -->
@@ -71,7 +29,7 @@
                 <div class="comments-list" style="overflow-y: auto;">
                     <h4 class="fw-bold mb-3 text-muted">Comments: {{no_of_comments}}</h4>
                     {% for comment in comments reversed %}
-                    <div class="comments-container mb-1 p-2 bg-light rounded">
+                    <div class="comments-container mb-1 p-2 rounded">
                         <p class="m-0"><img class="comment-image" src="{%if comment.commentor.image %}{{comment.commentor.image.url}}{% else %}{% static 'images/image.png' %}{%endif%}" alt=""><strong>{%if comment.commentor.user.first_name %}{{comment.commentor.user.first_name}}{% else %}{{comment.commentor.user.username}}{% endif%}</strong> </p>
                         <p class="m-0">{{comment.body}}</p>
                         <small class="text-muted pt-2 d-block text-end">{{comment.date_commented|naturaltime }}</small>

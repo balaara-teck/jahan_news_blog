@@ -68,6 +68,7 @@ ACCOUNT_FORMS = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 JAZZMIN_SETTINGS = {
     "site_title": "Nusrat Admadiyya College",
     "site_header": "Jahan News Portal",
@@ -113,9 +114,6 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success"
     }
 }
-
-
-
 
 MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",

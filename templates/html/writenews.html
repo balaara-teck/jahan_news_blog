@@ -4,10 +4,10 @@
 {% block title %}Post News{%endblock title%}
 {% block content %}
 
-<div class="container my-5">
+<div class="container my-5 ">
     <h2 class="mb-4 text-center">Write a News Article</h2>
 
-    <form method="POST" enctype="multipart/form-data" class="news-editor-form shadow p-4 rounded bg-white" id="news-editor-form">
+    <form method="POST" enctype="multipart/form-data" class="news-editor-form shadow p-4 rounded" id="news-editor-form">
         {% csrf_token %}
         <div class="mb-4">
             <label for="title" class="form-label fw-bold">Title</label>
@@ -37,7 +37,7 @@
                 <img id="image-preview" src="" alt="Image Preview" class="img-thumbnail">
             </div>
         </div>
-        <div class="mb-4">
+        <div class=" mb-4">
             <label for="body" class="form-label fw-bold">Body</label>
             <div class="toolbar mb-2 d-flex justify-content-start gap-2">
                 <button type="button" onclick="execCommand('bold')" class="btn btn-outline-secondary btn-sm"><b>B</b></button>
@@ -57,26 +57,26 @@
         <button type="submit" class="btn btn-primary w-100">Submit Article</button>
     </form>
     <script>
-        document.getElementById('news-editor-form').addEventListener('submit', function() {
-            document.getElementById('body').value = document.getElementById('editor').innerText;
-        });
+    //     document.getElementById('news-editor-form').addEventListener('submit', function() {
+    //         document.getElementById('body').value = document.getElementById('editor').innerText;
+    //     });
 
-        function previewImage(event) {
-        const previewContainer = document.getElementById("image-preview-container");
-        const previewImage = document.getElementById("image-preview");
+    //     function previewImage(event) {
+    //     const previewContainer = document.getElementById("image-preview-container");
+    //     const previewImage = document.getElementById("image-preview");
         
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImage.src = e.target.result;
-                previewContainer.style.display = "block";
-            };
-            reader.readAsDataURL(file);
-        } else {
-            previewContainer.style.display = "none";
-        }
-    }
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onload = function(e) {
+    //             previewImage.src = e.target.result;
+    //             previewContainer.style.display = "block";
+    //         };
+    //         reader.readAsDataURL(file);
+    //     } else {
+    //         previewContainer.style.display = "none";
+    //     }
+    // }
 
     </script>
 </div>
